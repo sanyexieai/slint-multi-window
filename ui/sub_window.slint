@@ -1,0 +1,35 @@
+export component SubWindow inherits Window {
+    width: 250px;
+    height: 150px;
+    title: "子窗口";
+    
+    in property <string> message: "";
+    callback close();
+    
+    VerticalLayout {
+        Text {
+            text: message;
+            horizontal-alignment: center;
+        }
+        Rectangle {
+            height: 40px;
+            background: button-clicked ? #cccccc : #eeeeee;
+            animate background { duration: 100ms; }
+            
+            property <bool> button-clicked;
+            
+            Text {
+                text: "关闭窗口";
+                horizontal-alignment: center;
+                vertical-alignment: center;
+            }
+            
+            TouchArea {
+                clicked => { root.close(); }
+                pointer-event(event) => {
+                    parent.button-clicked = self.pressed;
+                }
+            }
+        }
+    }
+} 

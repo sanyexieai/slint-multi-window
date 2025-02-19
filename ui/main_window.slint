@@ -1,0 +1,42 @@
+import { SubWindow } from "sub_window.slint";
+
+export component MainWindow inherits Window {
+    width: 400px;
+    height: 300px;
+    title: "主窗口";
+    
+    callback open-sub-window();
+    
+    VerticalLayout {
+        alignment: center;
+        spacing: 20px;
+        
+        Text {
+            text: "这是主窗口";
+            horizontal-alignment: center;
+            font-size: 20px;
+        }
+        
+        Rectangle {
+            height: 40px;
+            width: 120px;
+            background: button-clicked ? #cccccc : #eeeeee;
+            animate background { duration: 100ms; }
+            
+            property <bool> button-clicked;
+            
+            Text {
+                text: "打开新窗口";
+                horizontal-alignment: center;
+                vertical-alignment: center;
+            }
+            
+            TouchArea {
+                clicked => { root.open-sub-window(); }
+                pointer-event(event) => {
+                    parent.button-clicked = self.pressed;
+                }
+            }
+        }
+    }
+} 
